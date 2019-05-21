@@ -13,11 +13,14 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="Content\OrangeBox.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="libjpeg-9.dll">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </None>
     <None Update="libpng16-16.dll">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="libtiff-5.dll">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
@@ -29,11 +32,15 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="SDL2_image.dll">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="zlib1.dll">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Content\" />
   </ItemGroup>
 
 </Project>
