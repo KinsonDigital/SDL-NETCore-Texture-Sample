@@ -36,6 +36,8 @@ namespace SDLNetCoreTextureSample
                 //This can represent your game loop
                 while (!_quit)
                 {
+                    ProcessWindowEvents();
+
                     //Clear the screen
                     SDL.SDL_RenderClear(_rendererPtr);
 
@@ -95,6 +97,18 @@ namespace SDLNetCoreTextureSample
 
 
             return true;
+        }
+
+
+        private static void ProcessWindowEvents()
+        {
+            while (SDL.SDL_PollEvent(out var e) != 0)
+            {
+                if (e.type == SDL.SDL_EventType.SDL_QUIT)
+                {
+                    _quit = true;
+                }
+            }
         }
 
 
