@@ -26,6 +26,9 @@ namespace SDLNetCoreTextureSample
             _texturePtr = LoadTexture("OrangeBox");
 
             SDL.SDL_QueryTexture(_texturePtr, out uint format, out int access, out _textureWidth, out _textureHeight);
+            SDL.SDL_SetTextureColorMod(_texturePtr, 255, 255, 255);
+            SDL.SDL_SetTextureAlphaMod(_texturePtr, 32);
+            SDL.SDL_SetTextureBlendMode(_texturePtr, SDL.SDL_BlendMode.SDL_BLENDMODE_BLEND);
 
             Console.WriteLine("Press one of the arrow keys!");
             Console.WriteLine();
@@ -86,7 +89,7 @@ namespace SDLNetCoreTextureSample
                 _windowPtr = SDL.SDL_CreateWindow("SDL2 Keyboard Sample", SDL.SDL_WINDOWPOS_CENTERED, SDL.SDL_WINDOWPOS_CENTERED, WINDOW_WIDTH, WINDOW_HEIGHT, SDL.SDL_WindowFlags.SDL_WINDOW_SHOWN);
 
                 _rendererPtr = SDL.SDL_CreateRenderer(_windowPtr, -1, SDL.SDL_RendererFlags.SDL_RENDERER_ACCELERATED);
-
+                
                 if (_windowPtr == IntPtr.Zero)
                 {
                     Console.WriteLine("The window could not be created!!");
