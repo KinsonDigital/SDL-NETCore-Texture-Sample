@@ -11,7 +11,8 @@ namespace SDLNetCoreTextureSample
         private static bool _quit = false;
         private static IntPtr _windowPtr;
         private static IntPtr _rendererPtr;
-        private static IntPtr _texturePtr;
+        private static IntPtr _orangeTexturePtr;
+        private static IntPtr _blueTexturePtr;
         private static int _textureWidth;
         private static int _textureHeight;
         private static int _textureX = 270;
@@ -23,12 +24,18 @@ namespace SDLNetCoreTextureSample
             //Initialize SDL.  A true value means initialization was successful.
             var isInitialized = Init();
 
-            _texturePtr = LoadTexture("OrangeBox");
+            _orangeTexturePtr = LoadTexture("OrangeBox");
+            _blueTexturePtr = LoadTexture("BlueBox");
 
-            SDL.SDL_QueryTexture(_texturePtr, out uint format, out int access, out _textureWidth, out _textureHeight);
-            SDL.SDL_SetTextureColorMod(_texturePtr, 255, 255, 255);
-            SDL.SDL_SetTextureAlphaMod(_texturePtr, 32);
-            SDL.SDL_SetTextureBlendMode(_texturePtr, SDL.SDL_BlendMode.SDL_BLENDMODE_BLEND);
+            SDL.SDL_QueryTexture(_orangeTexturePtr, out uint format, out int access, out _textureWidth, out _textureHeight);
+
+            SDL.SDL_SetTextureColorMod(_orangeTexturePtr, 255, 255, 255);
+            SDL.SDL_SetTextureAlphaMod(_orangeTexturePtr, 32);
+            SDL.SDL_SetTextureBlendMode(_orangeTexturePtr, SDL.SDL_BlendMode.SDL_BLENDMODE_BLEND);
+
+            SDL.SDL_SetTextureColorMod(_blueTexturePtr, 255, 255, 255);
+            SDL.SDL_SetTextureAlphaMod(_blueTexturePtr, 32);
+            SDL.SDL_SetTextureBlendMode(_blueTexturePtr, SDL.SDL_BlendMode.SDL_BLENDMODE_BLEND);
 
             Console.WriteLine("Press one of the arrow keys!");
             Console.WriteLine();
@@ -61,7 +68,11 @@ namespace SDLNetCoreTextureSample
                     };
 
                     //Render texture to screen
-                    SDL.SDL_RenderCopy(_rendererPtr, _texturePtr, ref srcRect, ref destRect);
+                    SDL.SDL_RenderCopy(_rendererPtr, _orangeTexturePtr, ref srcRect, ref destRect);
+
+                    destRect.x = _textureX + 60;
+
+                    SDL.SDL_RenderCopy(_rendererPtr, _blueTexturePtr, ref srcRect, ref destRect);
 
                     //Update screen
                     SDL.SDL_RenderPresent(_rendererPtr);
@@ -95,6 +106,17 @@ namespace SDLNetCoreTextureSample
                     Console.WriteLine("The window could not be created!!");
                     Console.ReadLine();
                     return false;
+                }
+                else
+                {
+                    //Initialize PNG loading
+                    var imgFlags = SDL_image.IMG_InitFlags.IMG_INIT_PNG;
+                    if ((SDL_image.IMG_Init(imgFlags) > 0 & imgFlags > 0) == false)
+                    {
+                        //TODO: Convert to exception
+                        Console.WriteLine("SDL_image could not initialize! SDL_image Error: {0}", SDL.SDL_GetError());
+                        return false;
+                    }
                 }
             }
 
